@@ -3,23 +3,86 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>מרכז בטיחות — רשימת כוח אדם וכוננות</title>
+  <meta name="theme-color" content="#0b1120" />
+  <title>מרכז בטיחות — מערכת כוננים, חירום וכיסוי מחלקתי</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg-page: #0b1120;
+      --bg-header: rgba(2, 6, 23, 0.92);
+      --bg-card: rgba(30, 41, 59, 0.78);
+      --bg-subcard: rgba(15, 23, 42, 0.85);
+      --border-card: rgba(148, 163, 184, 0.16);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --chip-bg: rgba(30, 41, 59, 0.85);
+      --chip-text: #cbd5e1;
+      --chip-border: rgba(148, 163, 184, 0.22);
+    }
+
+    body.light-mode {
+      --bg-page: #f1f5f9;
+      --bg-header: rgba(255, 255, 255, 0.94);
+      --bg-card: rgba(255, 255, 255, 0.96);
+      --bg-subcard: #f8fafc;
+      --border-card: rgba(15, 23, 42, 0.12);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --chip-bg: #e2e8f0;
+      --chip-text: #1e293b;
+      --chip-border: rgba(15, 23, 42, 0.15);
+    }
+
     body {
       font-family: 'Heebo', system-ui, -apple-system, sans-serif;
-      background-color: #0b1120;
-      color: #f1f5f9;
+      background-color: var(--bg-page);
+      color: var(--text-main);
       -webkit-tap-highlight-color: transparent;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
+
+    .themed-header {
+      background-color: var(--bg-header);
+      border-color: var(--border-card);
+    }
+
     .glass-card {
-      background: rgba(30, 41, 59, 0.78);
+      background: var(--bg-card);
       backdrop-filter: blur(12px);
-      border: 1px solid rgba(148, 163, 184, 0.14);
+      border: 1px solid var(--border-card);
     }
+
+    .sub-surface {
+      background: var(--bg-subcard);
+      border-color: var(--border-card);
+    }
+
+    body.light-mode .text-white { color: #0f172a !important; }
+    body.light-mode .text-slate-200 { color: #1e293b !important; }
+    body.light-mode .text-slate-300 { color: #334155 !important; }
+    body.light-mode .text-slate-400 { color: #475569 !important; }
+    body.light-mode .bg-blue-600,
+    body.light-mode .bg-red-600,
+    body.light-mode .bg-emerald-600 { color: #ffffff !important; }
+    body.light-mode .bg-blue-600 *,
+    body.light-mode .bg-red-600 *,
+    body.light-mode .bg-emerald-600 * { color: #ffffff !important; }
+    body.light-mode .chip-active { color: #ffffff !important; }
+    body.light-mode .bg-slate-900\/90,
+    body.light-mode .bg-slate-900\/80,
+    body.light-mode .bg-slate-900,
+    body.light-mode .bg-slate-950\/80,
+    body.light-mode .bg-slate-800\/90,
+    body.light-mode .bg-slate-800\/70,
+    body.light-mode .bg-slate-800 {
+      background-color: #f8fafc !important;
+      border-color: #cbd5e1 !important;
+      color: #0f172a !important;
+    }
+
     .chip-active {
       background: linear-gradient(135deg, #2563eb, #1d4ed8);
       color: #ffffff;
@@ -27,176 +90,406 @@
       box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
     }
     .chip-inactive {
-      background: rgba(30, 41, 59, 0.8);
-      color: #cbd5e1;
-      border-color: rgba(148, 163, 184, 0.2);
+      background: var(--chip-bg);
+      color: var(--chip-text);
+      border-color: var(--chip-border);
     }
     .chip-inactive:hover {
-      border-color: rgba(148, 163, 184, 0.4);
-      color: #f8fafc;
+      border-color: #3b82f6;
     }
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
+
+    .tab-active {
+      background: rgba(37, 99, 235, 0.22);
+      color: #60a5fa;
+      border-color: rgba(59, 130, 246, 0.55);
     }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
+    body.light-mode .tab-active {
+      background: #dbeafe;
+      color: #1d4ed8;
+      border-color: #3b82f6;
     }
+    .tab-inactive {
+      background: var(--chip-bg);
+      color: var(--text-muted);
+      border-color: var(--chip-border);
+    }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
     @keyframes pulse-border {
-      0%, 100% { border-color: rgba(239, 68, 68, 0.5); }
+      0%, 100% { border-color: rgba(239, 68, 68, 0.45); }
       50% { border-color: rgba(239, 68, 68, 1); }
     }
-    .emergency-glow {
-      animation: pulse-border 2s infinite;
+    .emergency-glow { animation: pulse-border 2s infinite; }
+
+    /* Clean Print Layout for Emergency Wall Sheet */
+    @media print {
+      body { background: #ffffff !important; color: #000000 !important; padding: 0 !important; }
+      .no-print, header nav, #openEmergencyBtn, #refreshBtn, #themeToggleBtn, #emptyColumnsBanner, #pinnedDeptBanner, #searchFilterPanel, #emergencyModal, #toast { display: none !important; }
+      .glass-card { background: #ffffff !important; border: 1px solid #94a3b8 !important; box-shadow: none !important; break-inside: avoid; }
+      .text-white, .text-slate-200, .text-slate-300, .text-slate-400, .text-blue-300 { color: #000000 !important; }
+      a[href^="tel:"] { background: none !important; color: #000000 !important; border: 1px solid #000000 !important; }
     }
   </style>
 </head>
 <body class="min-h-screen pb-24 selection:bg-blue-600 selection:text-white">
 
   <!-- Top Sticky Header -->
-  <header class="sticky top-0 z-30 bg-slate-950/90 backdrop-blur-md border-b border-slate-800/80 px-4 py-3">
-    <div class="max-w-2xl mx-auto flex items-center justify-between gap-2">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-emerald-500 flex items-center justify-center shadow-lg shadow-blue-900/30 text-lg font-extrabold">
-          🛡️
-        </div>
-        <div>
-          <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-white leading-tight">
-            מרכז בטיחות — כוח אדם וכוננות
-          </h1>
-          <div class="flex items-center gap-2 text-xs text-slate-400 mt-0.5">
-            <span id="syncIndicator" class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
-            <span id="syncStatusText">מסונכרן מול Google Sheets</span>
+  <header class="sticky top-0 z-30 themed-header backdrop-blur-md border-b px-4 py-3">
+    <div class="max-w-2xl mx-auto space-y-2.5">
+      <div class="flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-emerald-500 flex items-center justify-center shadow-lg shadow-blue-900/30 text-lg font-extrabold shrink-0 text-white">
+            🛡️
+          </div>
+          <div>
+            <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-white leading-tight">
+              מרכז בטיחות — כוח אדם וכוננות
+            </h1>
+            <div class="flex items-center gap-1.5 text-xs text-slate-400 mt-0.5">
+              <span id="syncIndicator" class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span id="syncStatusText">מסונכרן מול Google Sheets</span>
+              <span id="lastSyncTime" class="text-[11px] text-slate-500 hidden sm:inline"></span>
+            </div>
           </div>
         </div>
+
+        <div class="flex items-center gap-1.5">
+          <button id="themeToggleBtn" type="button" class="p-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-bold transition" title="החלף תצוגת יום / לילה (לשמש ישירה)">
+            ☀️
+          </button>
+
+          <button id="refreshBtn" type="button" class="p-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-medium flex items-center gap-1 transition" title="רענן נתונים מהגיליון">
+            <svg id="refreshIcon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            <span class="hidden sm:inline">רענון</span>
+          </button>
+
+          <button id="openEmergencyBtn" type="button" class="px-3 py-2 rounded-xl bg-red-600 hover:bg-red-500 active:scale-95 text-white font-bold text-xs sm:text-sm shadow-lg shadow-red-900/40 flex items-center gap-1.5 transition emergency-glow border border-red-400/50">
+            <span>🚨</span>
+            <span>חירום</span>
+          </button>
+        </div>
       </div>
 
-      <div class="flex items-center gap-1.5">
-        <button id="refreshBtn" type="button" class="p-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-medium flex items-center gap-1 transition" title="רענן נתונים מהגיליון">
-          <svg id="refreshIcon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-          </svg>
-          <span class="hidden sm:inline">רענון</span>
+      <!-- 3-Tab Navigation Bar -->
+      <nav class="grid grid-cols-3 gap-1.5" aria-label="ניווט ראשי">
+        <button type="button" data-nav-tab="directory" class="nav-tab-btn tab-active py-2 px-2 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 transition">
+          <span>👥</span>
+          <span>כוננים ומחלקות</span>
         </button>
-
-        <button id="openEmergencyBtn" type="button" class="px-3 py-2 rounded-xl bg-red-600 hover:bg-red-500 active:scale-95 text-white font-bold text-xs sm:text-sm shadow-lg shadow-red-900/40 flex items-center gap-1.5 transition">
-          <span>🚨</span>
-          <span>חירום</span>
+        <button type="button" data-nav-tab="commander" class="nav-tab-btn tab-inactive py-2 px-2 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 transition">
+          <span>📊</span>
+          <span>דשבורד מפקד</span>
         </button>
-      </div>
+        <button type="button" data-nav-tab="report" class="nav-tab-btn tab-inactive py-2 px-2 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 transition">
+          <span>📝</span>
+          <span>דיווח וציוד</span>
+        </button>
+      </nav>
     </div>
   </header>
 
   <main class="max-w-2xl mx-auto px-4 pt-4 space-y-4">
 
-    <!-- KPI Summary Strip -->
-    <section class="grid grid-cols-4 gap-2">
-      <button type="button" data-kpi-role="all" class="kpi-card glass-card rounded-2xl p-2.5 text-center transition hover:border-blue-500/50 focus:outline-none">
-        <div id="kpiTotal" class="text-xl sm:text-2xl font-extrabold text-white">8</div>
-        <div class="text-[11px] text-slate-400 font-medium">סה״כ כוננים</div>
-      </button>
-      <button type="button" data-kpi-role="achmash" class="kpi-card glass-card rounded-2xl p-2.5 text-center transition hover:border-blue-500/50 focus:outline-none">
-        <div id="kpiAchmash" class="text-xl sm:text-2xl font-extrabold text-sky-400">6</div>
-        <div class="text-[11px] text-slate-400 font-medium">אחמ״ש</div>
-      </button>
-      <button type="button" data-kpi-role="maar" class="kpi-card glass-card rounded-2xl p-2.5 text-center transition hover:border-emerald-500/50 focus:outline-none">
-        <div id="kpiMaar" class="text-xl sm:text-2xl font-extrabold text-emerald-400">7</div>
-        <div class="text-[11px] text-slate-400 font-medium">מע״ר</div>
-      </button>
-      <button type="button" data-kpi-role="dual" class="kpi-card glass-card rounded-2xl p-2.5 text-center transition hover:border-purple-500/50 focus:outline-none">
-        <div id="kpiDual" class="text-xl sm:text-2xl font-extrabold text-purple-400">5</div>
-        <div class="text-[11px] text-slate-400 font-medium">הסמכה כפולה</div>
-      </button>
-    </section>
+    <!-- ==================== TAB 1: DIRECTORY ==================== -->
+    <div id="tab-directory" class="space-y-4">
 
-    <!-- Notice / Simulation Bar when Sheet columns H & I are still blank -->
-    <section id="emptyColumnsBanner" class="glass-card rounded-2xl p-3 border border-amber-500/30 bg-amber-950/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5">
-      <div class="text-xs text-amber-200/90 leading-relaxed">
-        <span class="font-bold text-amber-300">💡 שים לב:</span>
-        עמודות <strong>מספר מחלקה</strong> ו-<strong>אופי עבודה</strong> בגיליון כרגע ריקות. ברגע שתמלא אותן ב-Google Sheet הן יופיעו כאן אוטומטית.
-      </div>
-      <button id="toggleDemoBtn" type="button" class="shrink-0 px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/40 text-amber-200 text-xs font-bold transition">
-        הפעל הדמיית מחלקות לבדיקה
-      </button>
-    </section>
-
-    <!-- Interactive Search & Multi-Filter Console -->
-    <section class="glass-card rounded-2xl p-3.5 space-y-3">
-      <!-- Search Input -->
-      <div class="relative">
-        <input
-          id="searchInput"
-          type="search"
-          placeholder="חיפוש לפי שם, טלפון, מחלקה או אופי עבודה..."
-          class="w-full bg-slate-900/90 border border-slate-700/80 focus:border-blue-500 rounded-xl pr-10 pl-9 py-2.5 text-sm text-white placeholder-slate-400 focus:outline-none transition"
-        />
-        <svg class="w-4 h-4 text-slate-400 absolute right-3.5 top-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 103.5 10.5a7.5 7.5 0 0013.15 6.15z" />
-        </svg>
-        <button id="clearSearchBtn" type="button" class="hidden absolute left-2.5 top-2.5 text-slate-400 hover:text-white p-1 text-xs">
-          ✕
+      <!-- KPI Summary Strip -->
+      <section class="grid grid-cols-4 gap-2">
+        <button type="button" data-kpi-role="all" class="kpi-card glass-card rounded-2xl p-2.5 text-center transition hover:border-blue-500/50 focus:outline-none">
+          <div id="kpiTotal" class="text-xl sm:text-2xl font-extrabold text-white">14</div>
+          <div class="text-[11px] text-slate-400 font-medium">סה״כ כוננים</div>
         </button>
-      </div>
+        <button type="button" data-kpi-role="achmash" class="kpi-card glass-card rounded-2xl p-2.5 text-center transition hover:border-blue-500/50 focus:outline-none">
+          <div id="kpiAchmash" class="text-xl sm:text-2xl font-extrabold text-sky-400">6</div>
+          <div class="text-[11px] text-slate-400 font-medium">אחמ״ש</div>
+        </button>
+        <button type="button" data-kpi-role="maar" class="kpi-card glass-card rounded-2xl p-2.5 text-center transition hover:border-emerald-500/50 focus:outline-none">
+          <div id="kpiMaar" class="text-xl sm:text-2xl font-extrabold text-emerald-400">13</div>
+          <div class="text-[11px] text-slate-400 font-medium">מע״ר</div>
+        </button>
+        <button type="button" data-kpi-role="dual" class="kpi-card glass-card rounded-2xl p-2.5 text-center transition hover:border-purple-500/50 focus:outline-none">
+          <div id="kpiDual" class="text-xl sm:text-2xl font-extrabold text-purple-400">5</div>
+          <div class="text-[11px] text-slate-400 font-medium">הסמכה כפולה</div>
+        </button>
+      </section>
 
-      <!-- Filter Row 1: Role -->
-      <div class="space-y-1.5">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold text-slate-300">סינון לפי הסמכה / תפקיד:</span>
-          <button id="resetAllFiltersBtn" type="button" class="hidden text-xs text-blue-400 hover:text-blue-300 font-medium">
-            איפוס כל הסינונים
+      <!-- Pinned Department Bar -->
+      <section id="pinnedDeptBanner" class="hidden glass-card rounded-2xl px-3.5 py-2.5 border border-blue-500/40 bg-blue-950/25 flex items-center justify-between gap-2 text-xs">
+        <div class="flex items-center gap-2 text-blue-200">
+          <span>📌</span>
+          <span>המחלקה הקבועה שלך: <strong id="pinnedDeptName" class="text-white"></strong></span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="applyPinnedDeptBtn" type="button" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold">הצג רק אותה</button>
+          <button id="clearPinnedDeptBtn" type="button" class="text-slate-400 hover:text-white px-1">ביטול</button>
+        </div>
+      </section>
+
+      <!-- מיקום ציוד רפואי לשעת חירום — מחלקה 55 -->
+      <section id="dept55EquipBanner" class="glass-card rounded-2xl p-3.5 border border-emerald-500/30 bg-emerald-950/15 space-y-2">
+        <div class="flex items-center justify-between gap-2 flex-wrap">
+          <div class="flex items-center gap-2 text-xs sm:text-sm font-extrabold text-emerald-400">
+            <span>🧰</span>
+            <span>מיקום ציוד רפואי לשעת חירום — מחלקה 55</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+            ⚡ כלל המע״רים מוסמכי דפיברילטור
+          </span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs text-slate-200">
+          <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800">
+            <strong class="text-emerald-400 block">1. ארון תרופות</strong>
+            פינה אדומה (חדר קדם משימות)
+          </div>
+          <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800">
+            <strong class="text-emerald-400 block">2. תיק עזרה ראשונה</strong>
+            ממוקם בפינה אדומה
+          </div>
+          <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800">
+            <strong class="text-emerald-400 block">3. מכונת דפיברילטור</strong>
+            קומה קרקע ליד שעון נוכחות
+          </div>
+        </div>
+      </section>
+
+      <!-- Notice / Simulation Bar when some staff still have blank department/workType -->
+      <section id="emptyColumnsBanner" class="glass-card rounded-2xl p-3 border border-amber-500/30 bg-amber-950/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5">
+        <div class="text-xs text-amber-200/90 leading-relaxed">
+          <span class="font-bold text-amber-300">💡 שים לב:</span>
+          מחלקה 55 עודכנה בגיליון (6 מע״רים). עבור 8 הכוננים הנוספים טרם הוזנו <strong>מספר מחלקה</strong> ו-<strong>אופי עבודה</strong> בגיליון.
+        </div>
+        <button id="toggleDemoBtn" type="button" class="shrink-0 px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/40 text-amber-200 text-xs font-bold transition">
+          הפעל הדמיית מחלקות לשאר הכוננים
+        </button>
+      </section>
+
+      <!-- Interactive Search & Multi-Filter Console -->
+      <section id="searchFilterPanel" class="glass-card rounded-2xl p-3.5 space-y-3">
+        <!-- Search Input -->
+        <div class="relative">
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="חיפוש לפי שם, טלפון, מחלקה או אופי עבודה..."
+            class="w-full bg-slate-900/90 border border-slate-700/80 focus:border-blue-500 rounded-xl pr-10 pl-9 py-2.5 text-sm text-white placeholder-slate-400 focus:outline-none transition"
+          />
+          <svg class="w-4 h-4 text-slate-400 absolute right-3.5 top-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 103.5 10.5a7.5 7.5 0 0013.15 6.15z" />
+          </svg>
+          <button id="clearSearchBtn" type="button" class="hidden absolute left-2.5 top-2.5 text-slate-400 hover:text-white p-1 text-xs">
+            ✕
           </button>
         </div>
-        <div id="roleFilterContainer" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5">
-          <!-- Populated by JS -->
+
+        <!-- Filter Row 1: Role -->
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-300">סינון לפי הסמכה / תפקיד:</span>
+            <button id="resetAllFiltersBtn" type="button" class="hidden text-xs text-blue-400 hover:text-blue-300 font-medium">
+              איפוס כל הסינונים
+            </button>
+          </div>
+          <div id="roleFilterContainer" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Filter Row 2: Department (מספר מחלקה) -->
+        <div class="space-y-1.5 pt-1 border-t border-slate-800/80">
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <span class="text-xs font-semibold text-slate-300">סינון מהיר לפי מספר מחלקה:</span>
+            <div class="flex items-center gap-1.5">
+              <button id="shareDeptLinkBtn" type="button" class="hidden text-[11px] px-2 py-0.5 rounded-lg bg-emerald-600/25 hover:bg-emerald-600/40 text-emerald-300 border border-emerald-500/40 font-bold transition">
+                🔗 העתק לינק למחלקה
+              </button>
+              <button id="pinCurrentDeptBtn" type="button" class="hidden text-[11px] px-2 py-0.5 rounded-lg bg-blue-600/25 hover:bg-blue-600/40 text-blue-300 border border-blue-500/40 font-bold transition">
+                📌 קבע כמחלקה שלי
+              </button>
+            </div>
+          </div>
+          <div id="deptFilterContainer" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5">
+            <!-- Populated dynamically from column H -->
+          </div>
+        </div>
+
+        <!-- Filter Row 3: Work Nature (אופי עבודה) -->
+        <div class="space-y-1.5 pt-1 border-t border-slate-800/80">
+          <span class="text-xs font-semibold text-slate-300 block">סינון מהיר לפי אופי עבודה:</span>
+          <div id="workFilterContainer" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5">
+            <!-- Populated dynamically from column I -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Active Results Header -->
+      <div class="flex items-center justify-between gap-2 px-1 text-xs text-slate-400 flex-wrap">
+        <span id="resultsCountLabel">מציג 14 מתוך 14 כוננים (מסודר לפי מחלקה)</span>
+        <div class="flex items-center gap-3 no-print">
+          <button id="printSheetBtn" type="button" class="text-slate-300 hover:text-white font-medium flex items-center gap-1">
+            <span>🖨️</span>
+            <span>הדפסה</span>
+          </button>
+          <a
+            href="https://docs.google.com/spreadsheets/d/1xpvpwBv9JSNUyAXgfcGmPOqzTwsrUckEzb2hyrsK8c0/edit?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-blue-400 hover:text-blue-300 underline font-medium"
+          >
+            גיליון המקור ↗
+          </a>
         </div>
       </div>
 
-      <!-- Filter Row 2: Department (מספר מחלקה) -->
-      <div class="space-y-1.5 pt-1 border-t border-slate-800/80">
-        <span class="text-xs font-semibold text-slate-300 block">סינון מהיר לפי מספר מחלקה:</span>
-        <div id="deptFilterContainer" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5">
-          <!-- Populated dynamically from column H -->
-        </div>
-      </div>
+      <!-- Cards Container -->
+      <section id="cardsGrid" class="space-y-3">
+        <!-- Populated by JS -->
+      </section>
 
-      <!-- Filter Row 3: Work Nature (אופי עבודה) -->
-      <div class="space-y-1.5 pt-1 border-t border-slate-800/80">
-        <span class="text-xs font-semibold text-slate-300 block">סינון מהיר לפי אופי עבודה:</span>
-        <div id="workFilterContainer" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5">
-          <!-- Populated dynamically from column I -->
-        </div>
-      </div>
-    </section>
-
-    <!-- Active Results Header -->
-    <div class="flex items-center justify-between px-1 text-xs text-slate-400">
-      <span id="resultsCountLabel">מציג 8 מתוך 8 כוננים</span>
-      <a
-        href="https://docs.google.com/spreadsheets/d/1xpvpwBv9JSNUyAXgfcGmPOqzTwsrUckEzb2hyrsK8c0/edit?usp=sharing"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-blue-400 hover:text-blue-300 underline font-medium"
-      >
-        פתיחת גיליון המקור ↗
-      </a>
     </div>
 
-    <!-- Cards Container -->
-    <section id="cardsGrid" class="space-y-3">
-      <!-- Populated by JS -->
-    </section>
+    <!-- ==================== TAB 2: COMMANDER DASHBOARD ==================== -->
+    <div id="tab-commander" class="hidden space-y-4">
+      <section class="glass-card rounded-2xl p-4 space-y-3.5">
+        <div class="flex items-center justify-between gap-2 flex-wrap">
+          <div>
+            <h2 class="text-base font-extrabold text-white">📊 תמונת מצב כיסוי למפקד</h2>
+            <p class="text-xs text-slate-400">ניתוח אוטומטי בזמן אמת של פערי כיסוי לפי מחלקות והסמכות</p>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button id="copyCommanderSummaryBtn" type="button" class="px-3 py-1.5 rounded-xl bg-blue-600/25 hover:bg-blue-600/40 text-blue-300 border border-blue-500/40 text-xs font-bold transition">
+              📋 העתק סיכום לווטסאפ
+            </button>
+          </div>
+        </div>
+
+        <!-- Visual Certification Distribution Bars -->
+        <div id="certProgressBars" class="p-3 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-2.5">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Coverage Matrix Cards -->
+        <div id="commanderDeptMatrix" class="space-y-2.5">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- Data Completeness Audit -->
+      <section class="glass-card rounded-2xl p-4 space-y-3 border border-amber-500/25">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-extrabold text-amber-400">🛠️ בקרת שלמות נתונים בגיליון</h3>
+          <a
+            href="https://docs.google.com/spreadsheets/d/1xpvpwBv9JSNUyAXgfcGmPOqzTwsrUckEzb2hyrsK8c0/edit?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-xs text-blue-400 hover:text-blue-300 underline font-bold"
+          >
+            ערוך בגיליון ↗
+          </a>
+        </div>
+        <div id="dataHealthList" class="space-y-2 text-xs">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== TAB 3: INCIDENT REPORT & EQUIPMENT ==================== -->
+    <div id="tab-report" class="hidden space-y-4">
+      <!-- Quick Incident / Hazard Reporter -->
+      <section class="glass-card rounded-2xl p-4 space-y-3.5">
+        <div>
+          <h2 class="text-base font-extrabold text-white">📝 דיווח מהיר על אירוע / מפגע בטיחות</h2>
+          <p class="text-xs text-slate-400">מלא 3 פרטים קצרים ליצירת הודעת דיווח תקנית לשליחה מיידית ב-WhatsApp או העתקה</p>
+        </div>
+
+        <div class="space-y-2">
+          <label class="text-xs font-bold text-slate-300 block">1. סוג האירוע:</label>
+          <div class="grid grid-cols-2 gap-2" id="incidentTypeGroup">
+            <button type="button" data-inc-type="אירוע רפואי / עזרה ראשונה" class="inc-type-btn py-2 px-3 rounded-xl text-xs font-bold border bg-red-600/20 border-red-500 text-red-300 transition">🚑 אירוע רפואי</button>
+            <button type="button" data-inc-type="מפגע בטיחות" class="inc-type-btn py-2 px-3 rounded-xl text-xs font-bold border bg-slate-800/80 border-slate-700 text-slate-300 transition">⚠️ מפגע בטיחות</button>
+            <button type="button" data-inc-type="כמעט ונפגע" class="inc-type-btn py-2 px-3 rounded-xl text-xs font-bold border bg-slate-800/80 border-slate-700 text-slate-300 transition">⚡ כמעט ונפגע</button>
+            <button type="button" data-inc-type="חוסר / תקלה בציוד הצלה" class="inc-type-btn py-2 px-3 rounded-xl text-xs font-bold border bg-slate-800/80 border-slate-700 text-slate-300 transition">🧰 תקלה בציוד הצלה</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="space-y-1.5">
+            <label for="reportDeptSelect" class="text-xs font-bold text-slate-300 block">2. מחלקה / מיקום:</label>
+            <select id="reportDeptSelect" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:border-blue-500 focus:outline-none">
+              <!-- Populated by JS -->
+            </select>
+          </div>
+
+          <div class="space-y-1.5">
+            <label for="reportRecipientSelect" class="text-xs font-bold text-slate-300 block">3. נמען לשליחה ב-WhatsApp:</label>
+            <select id="reportRecipientSelect" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:border-blue-500 focus:outline-none">
+              <!-- Populated by JS -->
+            </select>
+          </div>
+        </div>
+
+        <div class="space-y-1.5">
+          <label for="reportDetailsInput" class="text-xs font-bold text-slate-300 block">תיאור קצר ומיקום מדויק (אופציונלי):</label>
+          <textarea
+            id="reportDetailsInput"
+            rows="2"
+            placeholder="לדוגמה: החלקה ליד הכניסה למחסן, דרוש מע״ר לבדיקה..."
+            class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none"
+          ></textarea>
+        </div>
+
+        <!-- Live Message Preview -->
+        <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1">
+          <span class="text-[11px] font-bold text-slate-400 block">תצוגה מקדימה של הודעת הדיווח:</span>
+          <pre id="reportPreviewText" class="text-xs text-slate-200 whitespace-pre-wrap font-sans leading-relaxed"></pre>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <a id="sendReportWaBtn" href="#" target="_blank" rel="noopener noreferrer" class="flex-1 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm text-center flex items-center justify-center gap-2 transition">
+            <span>💬</span>
+            <span>שלח דיווח ב-WhatsApp</span>
+          </a>
+          <button id="copyReportBtn" type="button" class="py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs sm:text-sm transition">
+            📋 העתק טקסט
+          </button>
+        </div>
+      </section>
+
+      <!-- Emergency Equipment Directory -->
+      <section class="glass-card rounded-2xl p-4 space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-extrabold text-emerald-400">🧰 מדריך מיקום ציוד רפואי וחירום</h3>
+          <span class="text-[11px] text-slate-400">מעודכן לפי שילוט המחלקה</span>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-emerald-500/30 space-y-2.5">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <span class="font-extrabold text-sm text-white">🏢 מחלקה 55</span>
+            <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300">6 מע״רים מוסמכי דפיברילטור</span>
+          </div>
+          <ul class="space-y-1.5 text-xs text-slate-300">
+            <li class="flex items-start gap-2"><span>💊</span><span><strong class="text-white">ארון תרופות:</strong> ממוקם בפינה אדומה (חדר קדם משימות).</span></li>
+            <li class="flex items-start gap-2"><span>🎒</span><span><strong class="text-white">תיק עזרה ראשונה לשעת חירום:</strong> ממוקם בפינה אדומה.</span></li>
+            <li class="flex items-start gap-2"><span>⚡</span><span><strong class="text-white">מכונת דפיברילטור (AED):</strong> קומה קרקע ליד שעון נוכחות.</span></li>
+          </ul>
+        </div>
+      </section>
+    </div>
 
   </main>
 
   <!-- Emergency Quick-Dispatch Modal -->
-  <div id="emergencyModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
-    <div class="w-full max-w-lg bg-slate-900 border-t sm:border border-red-500/40 rounded-t-3xl sm:rounded-3xl p-5 space-y-4 max-h-[88vh] overflow-y-auto">
+  <div id="emergencyModal" class="fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="w-full max-w-lg bg-slate-900 border-t sm:border border-red-500/40 rounded-t-3xl sm:rounded-3xl p-5 space-y-3.5 max-h-[92vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-slate-800 pb-3">
         <div class="flex items-center gap-2.5">
           <span class="text-2xl">🚨</span>
           <div>
             <h2 class="text-base font-extrabold text-white">נוהל הקפצת חירום מהירה</h2>
-            <p class="text-xs text-slate-400">בחר תפקיד נדרש לחיוג מיידי או שליחת מיקום ב-WhatsApp</p>
+            <p class="text-xs text-slate-400">חיוג מיידי למוקדי חירום או לכונן הקרוב במחלקה</p>
           </div>
         </div>
         <button id="closeEmergencyBtn" type="button" class="w-8 h-8 rounded-full bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center">
@@ -204,13 +497,63 @@
         </button>
       </div>
 
-      <div class="grid grid-cols-2 gap-2">
-        <button type="button" data-emerg-type="maar" class="emerg-tab-btn py-2 px-3 rounded-xl font-bold text-xs border bg-emerald-600/20 border-emerald-500 text-emerald-300">
-          🚑 צריך מע״ר (עזרה ראשונה)
+      <!-- National Emergency Quick-Dial Strip -->
+      <div class="grid grid-cols-3 gap-2">
+        <a href="tel:101" class="py-2 px-2 rounded-xl bg-red-600/20 hover:bg-red-600/35 border border-red-500/50 text-center text-xs font-extrabold text-red-300 transition">
+          🚑 מד״א 101
+        </a>
+        <a href="tel:102" class="py-2 px-2 rounded-xl bg-amber-600/20 hover:bg-amber-600/35 border border-amber-500/50 text-center text-xs font-extrabold text-amber-300 transition">
+          🚒 כיבוי 102
+        </a>
+        <a href="tel:100" class="py-2 px-2 rounded-xl bg-blue-600/20 hover:bg-blue-600/35 border border-blue-500/50 text-center text-xs font-extrabold text-blue-300 transition">
+          🚓 משטרה 100
+        </a>
+      </div>
+
+      <!-- Collapsible 60-Second Action Protocol -->
+      <div class="rounded-2xl bg-slate-800/70 border border-slate-700/80 p-3 space-y-2">
+        <button id="toggleProtocolBtn" type="button" class="w-full flex items-center justify-between text-xs font-extrabold text-amber-300">
+          <span>⚡ פרוטוקול 60 שניות ראשונות (לחץ לסימון שלבים)</span>
+          <span id="protocolArrow">▾</span>
         </button>
-        <button type="button" data-emerg-type="achmash" class="emerg-tab-btn py-2 px-3 rounded-xl font-bold text-xs border bg-slate-800 border-slate-700 text-slate-300">
-          🛡️ צריך אחמ״ש (אירוע בטיחות)
+        <div id="protocolSteps" class="hidden space-y-1.5 pt-1 border-t border-slate-700/70 text-xs text-slate-200">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="rounded accent-emerald-500" />
+            <span>1. ודא בטיחות סביבה והרחקת גורם סיכון (חשמל/אש/תנועה).</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="rounded accent-emerald-500" />
+            <span>2. הזעק מע״ר קרוב (מהרשימה למטה) ובמקרה חמור חייג 101.</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="rounded accent-emerald-500" />
+            <span>3. שלח מישהו להביא דפיברילטור (במחלקה 55: קומה קרקע ליד שעון נוכחות).</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="rounded accent-emerald-500" />
+            <span>4. עדכן אחמ״ש / מפקד תורן במיקום המדויק.</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-1.5">
+        <button type="button" data-emerg-type="maar" class="emerg-tab-btn py-2 px-2 rounded-xl font-bold text-xs border bg-red-600/25 border-red-500 text-red-200">
+          🚑 מע״ר
         </button>
+        <button type="button" data-emerg-type="aed" class="emerg-tab-btn py-2 px-2 rounded-xl font-bold text-xs border bg-slate-800 border-slate-700 text-slate-300">
+          ⚡ דפיברילטור
+        </button>
+        <button type="button" data-emerg-type="achmash" class="emerg-tab-btn py-2 px-2 rounded-xl font-bold text-xs border bg-slate-800 border-slate-700 text-slate-300">
+          🛡️ אחמ״ש
+        </button>
+      </div>
+
+      <!-- Quick Department Selector inside Emergency Modal -->
+      <div class="flex items-center gap-2">
+        <label for="emergDeptSelect" class="text-xs font-bold text-slate-300 shrink-0">עדיפות למחלקה:</label>
+        <select id="emergDeptSelect" class="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:border-red-500 focus:outline-none">
+          <!-- Populated by JS -->
+        </select>
       </div>
 
       <div id="emergencyList" class="space-y-2.5">
@@ -228,20 +571,32 @@
     const SHEET_ID = '1xpvpwBv9JSNUyAXgfcGmPOqzTwsrUckEzb2hyrsK8c0';
     const GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`;
     const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`;
+    const LIVE_SITE_URL = 'https://asizi24.github.io/safety-center/';
 
-    // נתוני גיבוי מדויקים מתוך הגיליון (משמשים בטעינה ראשונית או כשאין קליטה)
     const FALLBACK_STAFF = [
-      { id: 1, name: 'אבישי אברהם', roleTitle: 'אחמ״ש + מע״ר', phone: '052-6515324', isAchmash: true, isMaar: true, status: 'כוננות מלאה', dept: '', workType: '', demoDept: 'מחלקה 10', demoWork: 'שטח / רצפת ייצור' },
-      { id: 2, name: 'אדי זלומסקי', roleTitle: 'אחמ״ש + מע״ר', phone: '052-5351345', isAchmash: true, isMaar: true, status: 'כוננות מלאה', dept: '', workType: '', demoDept: 'מחלקה 20', demoWork: 'שטח / רצפת ייצור' },
-      { id: 3, name: 'דימה קוגן', roleTitle: 'אחמ״ש + מע״ר', phone: '054-5955802', isAchmash: true, isMaar: true, status: 'כוננות מלאה', dept: '', workType: '', demoDept: 'מחלקה 10', demoWork: 'מעבדה / סדנה' },
-      { id: 4, name: 'אביב חוגי', roleTitle: 'אחמ״ש + מע״ר', phone: '050-2221771', isAchmash: true, isMaar: true, status: 'כוננות מלאה', dept: '', workType: '', demoDept: 'מחלקה 30', demoWork: 'משרד / מטה' },
-      { id: 5, name: 'אלכס קלשניק', roleTitle: 'אחראי משמרת', phone: '054-2524793', isAchmash: true, isMaar: false, status: 'כוננות אחמ״ש', dept: '', workType: '', demoDept: 'מחלקה 20', demoWork: 'מעבדה / סדנה' },
-      { id: 6, name: 'דוד כמרן', roleTitle: 'מגיש עזרה ראשונה', phone: '050-8698681', isAchmash: false, isMaar: true, status: 'כוננות מע״ר', dept: '', workType: '', demoDept: 'מחלקה 30', demoWork: 'שטח / רצפת ייצור' },
-      { id: 7, name: 'גנט אבבה', roleTitle: 'מגיש עזרה ראשונה', phone: '053-5271748', isAchmash: false, isMaar: true, status: 'כוננות מע״ר', dept: '', workType: '', demoDept: 'מחלקה 10', demoWork: 'משרד / מטה' },
-      { id: 8, name: 'איציק', roleTitle: 'רש"צ (אחמ״ש + מע״ר)', phone: '052-...', isAchmash: true, isMaar: true, status: 'פעיל', dept: '', workType: '', demoDept: 'מטה בטיחות', demoWork: 'משרד / מטה' }
+      { id: 1, name: 'מיכאל ארליך', roleTitle: 'מגיש עזרה ראשונה • מוסמך דפיברילטור', phone: '052-9279081', isAchmash: false, isMaar: true, extraCert: 'מוסמך דפיברילטור', status: 'כוננות מע״ר', dept: 'מחלקה 55', workType: '' },
+      { id: 2, name: 'עדי פזרקר', roleTitle: 'מגיש עזרה ראשונה • מוסמך דפיברילטור', phone: '050-7352930', isAchmash: false, isMaar: true, extraCert: 'מוסמך דפיברילטור', status: 'כוננות מע״ר', dept: 'מחלקה 55', workType: '' },
+      { id: 3, name: 'רוזי קנטייב', roleTitle: 'מגיש עזרה ראשונה • מוסמך דפיברילטור', phone: '053-8319192', isAchmash: false, isMaar: true, extraCert: 'מוסמך דפיברילטור', status: 'כוננות מע״ר', dept: 'מחלקה 55', workType: '' },
+      { id: 4, name: 'מרב טלקר', roleTitle: 'מגיש עזרה ראשונה • מוסמך דפיברילטור', phone: '053-8207520', isAchmash: false, isMaar: true, extraCert: 'מוסמך דפיברילטור', status: 'כוננות מע״ר', dept: 'מחלקה 55', workType: '' },
+      { id: 5, name: 'ליאור אברהמי', roleTitle: 'מגיש עזרה ראשונה • מוסמך דפיברילטור', phone: '050-2121139', isAchmash: false, isMaar: true, extraCert: 'מוסמך דפיברילטור', status: 'כוננות מע״ר', dept: 'מחלקה 55', workType: '' },
+      { id: 6, name: 'שרית אקרמן', roleTitle: 'מגיש עזרה ראשונה • מוסמך דפיברילטור', phone: '050-6888294', isAchmash: false, isMaar: true, extraCert: 'מוסמך דפיברילטור', status: 'כוננות מע״ר', dept: 'מחלקה 55', workType: '' },
+      { id: 7, name: 'אבישי אברהם', roleTitle: 'אחמ״ש + מע״ר', phone: '052-6515324', isAchmash: true, isMaar: true, extraCert: '', status: 'כוננות מלאה', dept: '', workType: '' },
+      { id: 8, name: 'אדי זלומסקי', roleTitle: 'אחמ״ש + מע״ר', phone: '052-5351345', isAchmash: true, isMaar: true, extraCert: '', status: 'כוננות מלאה', dept: '', workType: '' },
+      { id: 9, name: 'דימה קוגן', roleTitle: 'אחמ״ש + מע״ר', phone: '054-5955802', isAchmash: true, isMaar: true, extraCert: '', status: 'כוננות מלאה', dept: '', workType: '' },
+      { id: 10, name: 'אביב חוגי', roleTitle: 'אחמ״ש + מע״ר', phone: '050-2221771', isAchmash: true, isMaar: true, extraCert: '', status: 'כוננות מלאה', dept: '', workType: '' },
+      { id: 11, name: 'אלכס קלשניק', roleTitle: 'אחראי משמרת', phone: '054-2524793', isAchmash: true, isMaar: false, extraCert: '', status: 'כוננות אחמ״ש', dept: '', workType: '' },
+      { id: 12, name: 'דוד כמרן', roleTitle: 'מגיש עזרה ראשונה', phone: '050-8698681', isAchmash: false, isMaar: true, extraCert: '', status: 'כוננות מע״ר', dept: '', workType: '' },
+      { id: 13, name: 'גנט אבבה', roleTitle: 'מגיש עזרה ראשונה', phone: '053-5271748', isAchmash: false, isMaar: true, extraCert: '', status: 'כוננות מע״ר', dept: '', workType: '' },
+      { id: 14, name: 'איציק', roleTitle: 'רש"צ (אחמ״ש + מע״ר)', phone: '052-...', isAchmash: true, isMaar: true, extraCert: '', status: 'כוננות מלאה', dept: '', workType: '' }
     ];
 
     const DEMO_ENRICHMENT = {
+      'מיכאל ארליך': { dept: 'מחלקה 55', workType: 'שטח / רצפת ייצור' },
+      'עדי פזרקר': { dept: 'מחלקה 55', workType: 'שטח / רצפת ייצור' },
+      'רוזי קנטייב': { dept: 'מחלקה 55', workType: 'מעבדה / סדנה' },
+      'מרב טלקר': { dept: 'מחלקה 55', workType: 'משרד / מטה' },
+      'ליאור אברהמי': { dept: 'מחלקה 55', workType: 'שטח / רצפת ייצור' },
+      'שרית אקרמן': { dept: 'מחלקה 55', workType: 'משרד / מטה' },
       'אבישי אברהם': { dept: 'מחלקה 10', workType: 'שטח / רצפת ייצור' },
       'אדי זלומסקי': { dept: 'מחלקה 20', workType: 'שטח / רצפת ייצור' },
       'דימה קוגן': { dept: 'מחלקה 10', workType: 'מעבדה / סדנה' },
@@ -252,15 +607,111 @@
       'איציק': { dept: 'מטה בטיחות', workType: 'משרד / מטה' }
     };
 
+    function normalizeDeptName(raw) {
+      if (!raw) return '';
+      const clean = String(raw).trim();
+      if (!clean || clean === '—' || clean === '-') return '';
+      if (/^\d+$/.test(clean)) return `מחלקה ${clean}`;
+      return clean;
+    }
+
+    function getUrlDeptParam() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const deptParam = params.get('dept');
+        if (deptParam) return normalizeDeptName(deptParam);
+      } catch (e) {}
+      return '';
+    }
+
+    function loadStorage(key, fallback) {
+      try {
+        const val = localStorage.getItem(key);
+        return val !== null ? val : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    const initialDept = getUrlDeptParam() || loadStorage('safety_center_pinned_dept', '') || 'all';
+
     const state = {
+      activeTab: 'directory',
       rawStaff: JSON.parse(JSON.stringify(FALLBACK_STAFF)),
-      roleFilter: 'all',     // 'all' | 'achmash' | 'maar' | 'dual'
-      deptFilter: 'all',     // 'all' | specific dept | '__unassigned__'
-      workFilter: 'all',     // 'all' | specific workType | '__unassigned__'
+      roleFilter: 'all',
+      deptFilter: initialDept,
+      workFilter: 'all',
+      pinnedDept: loadStorage('safety_center_pinned_dept', ''),
+      lightMode: loadStorage('safety_center_theme', 'dark') === 'light',
       searchQuery: '',
       demoMode: false,
-      emergencyType: 'maar'
+      emergencyType: 'maar',
+      emergencyDept: initialDept,
+      reportType: 'אירוע רפואי / עזרה ראשונה',
+      reportDept: initialDept !== 'all' ? initialDept : 'מחלקה 55',
+      reportRecipientPhone: ''
     };
+
+    function applyTheme() {
+      document.body.classList.toggle('light-mode', state.lightMode);
+      const btn = document.getElementById('themeToggleBtn');
+      if (btn) {
+        btn.textContent = state.lightMode ? '🌙' : '☀️';
+        btn.title = state.lightMode ? 'עבור למצב כהה' : 'עבור למצב בהיר (לשמש ישירה)';
+      }
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 2400);
+    }
+
+    function copyTextToClipboard(text, successMsg) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).catch(() => {});
+      } else {
+        const temp = document.createElement('textarea');
+        temp.value = text;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+      }
+      showToast(successMsg);
+    }
+
+    function downloadVCard(person) {
+      const cleanPhone = (person.phone || '').replace(/[^\d+]/g, '');
+      if (!cleanPhone) return;
+      const orgLine = person.effectiveDept ? `מרכז בטיחות - ${person.effectiveDept}` : 'מרכז בטיחות';
+      const vcf = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        `FN:${person.name} (${person.isAchmash ? 'אחמ״ש' : 'מע״ר'})`,
+        `ORG:${orgLine}`,
+        `TITLE:${person.roleTitle}`,
+        `TEL;TYPE=CELL:${cleanPhone}`,
+        'END:VCARD'
+      ].join('\r\n');
+
+      const blob = new Blob([vcf], { type: 'text/vcard;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${person.name.replace(/\s+/g, '_')}.vcf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      showToast(`כרטיס איש הקשר של ${person.name} הורד לשמירה בנייד`);
+    }
+
+    function buildDeptDeepLink(deptName) {
+      const numericOnly = deptName.replace(/^מחלקה\s+/, '');
+      return `${LIVE_SITE_URL}?dept=${encodeURIComponent(numericOnly)}`;
+    }
 
     function getCellVal(row, idx) {
       if (!row || !row.c || !row.c[idx]) return '';
@@ -284,20 +735,10 @@
         const colH = getCellVal(row, 7);
         const colI = getCellVal(row, 8);
 
-        if (colA.includes('טבלת אחראי משמרת')) {
-          currentSection = 'achmash';
-          continue;
-        }
-        if (colA.includes('טבלת מגישי עזרה ראשונה')) {
-          currentSection = 'maar';
-          continue;
-        }
-        if (colA.includes('ריכוז כוח אדם משולב')) {
-          currentSection = 'master';
-          continue;
-        }
+        if (colA.includes('טבלת אחראי משמרת')) { currentSection = 'achmash'; continue; }
+        if (colA.includes('טבלת מגישי עזרה ראשונה')) { currentSection = 'maar'; continue; }
+        if (colA.includes('ריכוז כוח אדם משולב')) { currentSection = 'master'; continue; }
 
-        // שורת נתונים תקפה מתחילה במספר סידורי בעמודה A ושם בעמודה B
         if (!/^\d+$/.test(colA) || !colB || colB === 'שם') continue;
 
         const name = colB;
@@ -309,18 +750,17 @@
             phone: colD || '',
             isAchmash: false,
             isMaar: false,
+            extraCert: '',
             status: colG || 'פעיל',
-            dept: colH || '',
-            workType: colI || ''
+            dept: normalizeDeptName(colH),
+            workType: (colI && colI !== '—') ? colI : ''
           });
         }
 
         const entry = mapByName.get(name);
-        if (colD && (!entry.phone || entry.phone.includes('...'))) {
-          entry.phone = colD;
-        }
-        if (colH) entry.dept = colH;
-        if (colI) entry.workType = colI;
+        if (colD && (!entry.phone || entry.phone.includes('...'))) entry.phone = colD;
+        if (colH && normalizeDeptName(colH)) entry.dept = normalizeDeptName(colH);
+        if (colI && colI !== '—') entry.workType = colI;
         if (colG) entry.status = colG;
 
         if (currentSection === 'achmash') {
@@ -329,6 +769,7 @@
         } else if (currentSection === 'maar') {
           entry.isMaar = true;
           if (colF.includes('אחמ״ש') || colF.includes('אחמ"ש')) entry.isAchmash = true;
+          if (colF.includes('דפיברילטור')) entry.extraCert = 'מוסמך דפיברילטור';
         } else if (currentSection === 'master') {
           entry.roleTitle = colC || entry.roleTitle;
           if (colE.includes('✓')) entry.isAchmash = true;
@@ -340,6 +781,9 @@
         let roleTitle = item.roleTitle;
         if (item.isAchmash && item.isMaar && !roleTitle.includes('+')) {
           roleTitle = item.name === 'איציק' ? 'רש"צ (אחמ״ש + מע״ר)' : 'אחמ״ש + מע״ר';
+        }
+        if (item.extraCert && !roleTitle.includes(item.extraCert)) {
+          roleTitle = `${roleTitle} • ${item.extraCert}`;
         }
         return { ...item, id: idx + 1, roleTitle };
       });
@@ -354,15 +798,10 @@
       for (let i = 0; i < line.length; i++) {
         const ch = line[i];
         if (ch === '"') {
-          if (inQuotes && line[i + 1] === '"') {
-            cur += '"';
-            i++;
-          } else {
-            inQuotes = !inQuotes;
-          }
+          if (inQuotes && line[i + 1] === '"') { cur += '"'; i++; }
+          else { inQuotes = !inQuotes; }
         } else if (ch === ',' && !inQuotes) {
-          result.push(cur.trim());
-          cur = '';
+          result.push(cur.trim()); cur = '';
         } else {
           cur += ch;
         }
@@ -375,19 +814,14 @@
       return csvText
         .split(/\r?\n/)
         .filter(line => line.trim().length > 0)
-        .map(line => ({
-          c: parseCsvLine(line).map(val => ({ v: val }))
-        }));
+        .map(line => ({ c: parseCsvLine(line).map(val => ({ v: val })) }));
     }
 
     function fetchViaJsonp() {
       return new Promise((resolve, reject) => {
         const cbName = 'gvizCb_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
         const script = document.createElement('script');
-        const timer = setTimeout(() => {
-          cleanup();
-          reject(new Error('JSONP timeout'));
-        }, 7000);
+        const timer = setTimeout(() => { cleanup(); reject(new Error('JSONP timeout')); }, 7000);
 
         function cleanup() {
           clearTimeout(timer);
@@ -397,31 +831,22 @@
 
         window[cbName] = function(response) {
           cleanup();
-          if (response && response.table && response.table.rows) {
-            resolve(response.table.rows);
-          } else {
-            reject(new Error('Invalid JSONP table'));
-          }
+          if (response && response.table && response.table.rows) resolve(response.table.rows);
+          else reject(new Error('Invalid JSONP table'));
         };
 
-        script.onerror = () => {
-          cleanup();
-          reject(new Error('JSONP script error'));
-        };
-
+        script.onerror = () => { cleanup(); reject(new Error('JSONP script error')); };
         script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=responseHandler:${cbName}&gid=0&_=${Date.now()}`;
         document.head.appendChild(script);
       });
     }
 
     async function fetchSheetRowsMultiStrategy() {
-      // ניסיון 1: JSONP (עוקף חסימות CORS ו-Tracking Prevention של דפדפנים כשמחוברים/מנותקים מחשבון גוגל)
       try {
         const rows = await fetchViaJsonp();
         if (rows && rows.length > 0) return rows;
       } catch (e) {}
 
-      // ניסיון 2: Fetch ישיר מ-GVIZ ללא שליחת עוגיות צד-שלישי
       try {
         const res = await fetch(GVIZ_URL, { cache: 'no-store', credentials: 'omit' });
         if (res.ok) {
@@ -435,7 +860,6 @@
         }
       } catch (e) {}
 
-      // ניסיון 3: ייצוא CSV ישיר מהגיליון
       const csvRes = await fetch(CSV_URL, { cache: 'no-store', credentials: 'omit' });
       if (!csvRes.ok) throw new Error('CSV HTTP ' + csvRes.status);
       const csvText = await csvRes.text();
@@ -445,6 +869,7 @@
     async function syncFromGoogleSheet() {
       const indicator = document.getElementById('syncIndicator');
       const statusText = document.getElementById('syncStatusText');
+      const lastSyncEl = document.getElementById('lastSyncTime');
       const refreshIcon = document.getElementById('refreshIcon');
 
       refreshIcon.classList.add('animate-spin');
@@ -456,22 +881,19 @@
 
         if (parsedStaff && parsedStaff.length > 0) {
           state.rawStaff = parsedStaff;
-          try {
-            localStorage.setItem('safety_center_staff_v1', JSON.stringify(parsedStaff));
-          } catch (e) {}
+          try { localStorage.setItem('safety_center_staff_v2', JSON.stringify(parsedStaff)); } catch (e) {}
+          const nowStr = new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
           indicator.className = 'inline-block w-2 h-2 rounded-full bg-emerald-400';
           statusText.textContent = 'מחובר חי ל-Google Sheets ✓';
+          lastSyncEl.textContent = `• עודכן ${nowStr}`;
         } else {
           throw new Error('Empty parsed staff');
         }
       } catch (err) {
         let usedCache = false;
         try {
-          const cached = localStorage.getItem('safety_center_staff_v1');
-          if (cached) {
-            state.rawStaff = JSON.parse(cached);
-            usedCache = true;
-          }
+          const cached = localStorage.getItem('safety_center_staff_v2');
+          if (cached) { state.rawStaff = JSON.parse(cached); usedCache = true; }
         } catch (e) {}
         indicator.className = 'inline-block w-2 h-2 rounded-full bg-amber-400';
         statusText.textContent = usedCache ? 'נטען מזיכרון מקומי (Offline)' : 'נתוני גיבוי מובנים (פעיל)';
@@ -481,27 +903,48 @@
       }
     }
 
+    function compareDepartments(aDept, bDept) {
+      if (aDept && !bDept) return -1;
+      if (!aDept && bDept) return 1;
+      if (!aDept && !bDept) return 0;
+      return aDept.localeCompare(bDept, 'he', { numeric: true });
+    }
+
     function getEffectiveStaff() {
-      return state.rawStaff.map(person => {
+      const mapped = state.rawStaff.map(person => {
         const demo = DEMO_ENRICHMENT[person.name] || { dept: 'מחלקה 10', workType: 'שטח / רצפת ייצור' };
         return {
           ...person,
-          effectiveDept: person.dept || (state.demoMode ? demo.dept : ''),
+          hasAed: Boolean(person.extraCert && person.extraCert.includes('דפיברילטור')),
+          effectiveDept: normalizeDeptName(person.dept) || (state.demoMode ? demo.dept : ''),
           effectiveWork: person.workType || (state.demoMode ? demo.workType : '')
         };
+      });
+      return mapped.sort((a, b) => {
+        const deptCmp = compareDepartments(a.effectiveDept, b.effectiveDept);
+        if (deptCmp !== 0) return deptCmp;
+        if (a.isAchmash !== b.isAchmash) return a.isAchmash ? -1 : 1;
+        return a.id - b.id;
+      });
+    }
+
+    function switchTab(tabId) {
+      state.activeTab = tabId;
+      ['directory', 'commander', 'report'].forEach(id => {
+        const el = document.getElementById(`tab-${id}`);
+        if (el) el.classList.toggle('hidden', id !== tabId);
+      });
+      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+        const isCurrent = btn.getAttribute('data-nav-tab') === tabId;
+        btn.className = `nav-tab-btn ${isCurrent ? 'tab-active' : 'tab-inactive'} py-2 px-2 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 transition`;
       });
     }
 
     function updateKPIs(staffList) {
-      const total = staffList.length;
-      const achmash = staffList.filter(p => p.isAchmash).length;
-      const maar = staffList.filter(p => p.isMaar).length;
-      const dual = staffList.filter(p => p.isAchmash && p.isMaar).length;
-
-      document.getElementById('kpiTotal').textContent = total;
-      document.getElementById('kpiAchmash').textContent = achmash;
-      document.getElementById('kpiMaar').textContent = maar;
-      document.getElementById('kpiDual').textContent = dual;
+      document.getElementById('kpiTotal').textContent = staffList.length;
+      document.getElementById('kpiAchmash').textContent = staffList.filter(p => p.isAchmash).length;
+      document.getElementById('kpiMaar').textContent = staffList.filter(p => p.isMaar).length;
+      document.getElementById('kpiDual').textContent = staffList.filter(p => p.isAchmash && p.isMaar).length;
     }
 
     function renderRoleFilters(staffList) {
@@ -510,13 +953,15 @@
         all: staffList.length,
         achmash: staffList.filter(p => p.isAchmash).length,
         maar: staffList.filter(p => p.isMaar).length,
-        dual: staffList.filter(p => p.isAchmash && p.isMaar).length
+        dual: staffList.filter(p => p.isAchmash && p.isMaar).length,
+        aed: staffList.filter(p => p.hasAed).length
       };
 
       const roles = [
         { id: 'all', label: `הכל (${counts.all})` },
         { id: 'achmash', label: `🛡️ אחמ״ש (${counts.achmash})` },
         { id: 'maar', label: `🚑 מע״ר (${counts.maar})` },
+        { id: 'aed', label: `⚡ דפיברילטור (${counts.aed})` },
         { id: 'dual', label: `⭐ הסמכה כפולה (${counts.dual})` }
       ];
 
@@ -543,23 +988,45 @@
       const workContainer = document.getElementById('workFilterContainer');
       const banner = document.getElementById('emptyColumnsBanner');
       const toggleDemoBtn = document.getElementById('toggleDemoBtn');
+      const pinBtn = document.getElementById('pinCurrentDeptBtn');
+      const shareBtn = document.getElementById('shareDeptLinkBtn');
+      const pinnedBanner = document.getElementById('pinnedDeptBanner');
+      const pinnedNameEl = document.getElementById('pinnedDeptName');
 
-      const hasRealSheetMeta = state.rawStaff.some(p => p.dept || p.workType);
-      banner.classList.toggle('hidden', hasRealSheetMeta);
-      toggleDemoBtn.textContent = state.demoMode ? 'חזור לנתוני הגיליון בלבד' : 'הפעל הדמיית מחלקות לבדיקה';
+      const allHaveDeptAndWork = state.rawStaff.every(p => p.dept && p.workType);
+      banner.classList.toggle('hidden', allHaveDeptAndWork);
+      toggleDemoBtn.textContent = state.demoMode ? 'חזור לנתוני הגיליון בלבד' : 'הפעל הדמיית מחלקות לשאר הכוננים';
 
-      // חילוץ מחלקות ייחודיות
-      const depts = Array.from(new Set(staffList.map(p => p.effectiveDept).filter(Boolean)));
+      const equipBanner = document.getElementById('dept55EquipBanner');
+      if (equipBanner) {
+        const showEquip = state.deptFilter === 'all' || state.deptFilter === 'מחלקה 55';
+        equipBanner.classList.toggle('hidden', !showEquip);
+      }
+
+      const depts = Array.from(new Set(staffList.map(p => p.effectiveDept).filter(Boolean)))
+        .sort((a, b) => a.localeCompare(b, 'he', { numeric: true }));
       const unassignedDeptCount = staffList.filter(p => !p.effectiveDept).length;
 
       if (state.deptFilter !== 'all' && state.deptFilter !== '__unassigned__' && !depts.includes(state.deptFilter)) {
         state.deptFilter = 'all';
       }
 
+      const isSpecificDept = state.deptFilter !== 'all' && state.deptFilter !== '__unassigned__';
+      pinBtn.classList.toggle('hidden', !(isSpecificDept && state.deptFilter !== state.pinnedDept));
+      shareBtn.classList.toggle('hidden', !isSpecificDept);
+
+      if (state.pinnedDept && depts.includes(state.pinnedDept)) {
+        pinnedBanner.classList.remove('hidden');
+        pinnedNameEl.textContent = state.pinnedDept;
+      } else {
+        pinnedBanner.classList.add('hidden');
+      }
+
       const deptOptions = [{ id: 'all', label: 'כל המחלקות' }];
       depts.forEach(d => {
         const c = staffList.filter(p => p.effectiveDept === d).length;
-        deptOptions.push({ id: d, label: `${d} (${c})` });
+        const pinMark = state.pinnedDept === d ? '📌 ' : '';
+        deptOptions.push({ id: d, label: `${pinMark}${d} (${c})` });
       });
       if (unassignedDeptCount > 0) {
         deptOptions.push({ id: '__unassigned__', label: `טרם הוגדרה מחלקה (${unassignedDeptCount})` });
@@ -582,7 +1049,6 @@
         });
       });
 
-      // חילוץ אופי עבודה ייחודי
       const works = Array.from(new Set(staffList.map(p => p.effectiveWork).filter(Boolean)));
       const unassignedWorkCount = staffList.filter(p => !p.effectiveWork).length;
 
@@ -622,6 +1088,7 @@
         if (state.roleFilter === 'achmash' && !person.isAchmash) return false;
         if (state.roleFilter === 'maar' && !person.isMaar) return false;
         if (state.roleFilter === 'dual' && !(person.isAchmash && person.isMaar)) return false;
+        if (state.roleFilter === 'aed' && !person.hasAed) return false;
 
         if (state.deptFilter === '__unassigned__' && person.effectiveDept) return false;
         if (state.deptFilter !== 'all' && state.deptFilter !== '__unassigned__' && person.effectiveDept !== state.deptFilter) return false;
@@ -632,12 +1099,8 @@
         if (state.searchQuery) {
           const q = state.searchQuery.toLowerCase();
           const haystack = [
-            person.name,
-            person.roleTitle,
-            person.phone,
-            person.effectiveDept,
-            person.effectiveWork,
-            person.status
+            person.name, person.roleTitle, person.phone,
+            person.effectiveDept, person.effectiveWork, person.status, person.extraCert
           ].join(' ').toLowerCase();
           if (!haystack.includes(q)) return false;
         }
@@ -646,29 +1109,11 @@
       });
     }
 
-    function formatWhatsAppUrl(phone, name) {
+    function formatWhatsAppUrl(phone, text) {
       const clean = (phone || '').replace(/\D/g, '');
       if (clean.length < 9) return null;
       const intl = clean.startsWith('0') ? '972' + clean.slice(1) : clean;
-      const msg = encodeURIComponent(`היי ${name}, פונה אליך דרך דף הכוננים של מרכז הבטיחות.`);
-      return `https://wa.me/${intl}?text=${msg}`;
-    }
-
-    function copyPhone(phone) {
-      const toast = document.getElementById('toast');
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(phone).catch(() => {});
-      } else {
-        const temp = document.createElement('textarea');
-        temp.value = phone;
-        document.body.appendChild(temp);
-        temp.select();
-        document.execCommand('copy');
-        document.body.removeChild(temp);
-      }
-      toast.textContent = `המספר ${phone} הועתק ללוח`;
-      toast.classList.remove('hidden');
-      setTimeout(() => toast.classList.add('hidden'), 2200);
+      return `https://wa.me/${intl}?text=${encodeURIComponent(text)}`;
     }
 
     function renderCards(filtered, totalCount) {
@@ -676,7 +1121,7 @@
       const countLabel = document.getElementById('resultsCountLabel');
       const resetBtn = document.getElementById('resetAllFiltersBtn');
 
-      countLabel.textContent = `מציג ${filtered.length} מתוך ${totalCount} כוננים`;
+      countLabel.textContent = `מציג ${filtered.length} מתוך ${totalCount} כוננים (מסודר לפי מחלקה)`;
       const isFiltered = state.roleFilter !== 'all' || state.deptFilter !== 'all' || state.workFilter !== 'all' || state.searchQuery !== '';
       resetBtn.classList.toggle('hidden', !isFiltered);
 
@@ -692,25 +1137,44 @@
           </div>
         `;
         const emptyResetBtn = document.getElementById('emptyResetBtn');
-        if (emptyResetBtn) {
-          emptyResetBtn.addEventListener('click', resetFilters);
-        }
+        if (emptyResetBtn) emptyResetBtn.addEventListener('click', resetFilters);
         return;
       }
 
+      let lastDeptGroup = null;
       grid.innerHTML = filtered.map(person => {
         const hasValidPhone = person.phone && !person.phone.includes('...');
-        const waUrl = hasValidPhone ? formatWhatsAppUrl(person.phone, person.name) : null;
+        const waUrl = hasValidPhone ? formatWhatsAppUrl(person.phone, `היי ${person.name}, פונה אליך דרך דף הכוננים של מרכז הבטיחות.`) : null;
         const deptLabel = person.effectiveDept || 'ללא מחלקה בגיליון';
         const workLabel = person.effectiveWork || 'ללא אופי עבודה בגיליון';
+        const currentGroup = person.effectiveDept || 'ללא שיוך מחלקתי בגיליון';
+        const groupCount = filtered.filter(p => (p.effectiveDept || 'ללא שיוך מחלקתי בגיליון') === currentGroup).length;
+
+        let groupHeaderHtml = '';
+        if (currentGroup !== lastDeptGroup) {
+          lastDeptGroup = currentGroup;
+          groupHeaderHtml = `
+            <div class="pt-2 pb-1 flex items-center justify-between border-b border-slate-800/90">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full ${person.effectiveDept ? 'bg-blue-400' : 'bg-slate-500'}"></span>
+                <h3 class="text-sm font-extrabold ${person.effectiveDept ? 'text-blue-400' : 'text-slate-300'}">🏢 ${currentGroup}</h3>
+              </div>
+              <div class="flex items-center gap-2">
+                ${person.effectiveDept ? `<button type="button" data-copy-dept-link="${person.effectiveDept}" class="copy-dept-link-btn no-print text-[11px] text-emerald-400 hover:text-emerald-300 font-semibold">🔗 קישור למחלקה</button>` : ''}
+                <span class="text-xs font-semibold text-slate-400">${groupCount} כוננים</span>
+              </div>
+            </div>
+          `;
+        }
 
         return `
-          <article class="glass-card rounded-2xl p-4 transition hover:border-slate-600">
+          ${groupHeaderHtml}
+          <article class="glass-card rounded-2xl p-4 transition hover:border-slate-500">
             <div class="flex items-start justify-between gap-3">
               <div class="space-y-1">
                 <div class="flex items-center gap-2 flex-wrap">
                   <h2 class="text-base font-extrabold text-white">${person.name}</h2>
-                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
                     ${person.status}
                   </span>
@@ -718,14 +1182,13 @@
                 <p class="text-xs text-slate-400">${person.roleTitle}</p>
               </div>
 
-              <!-- Role Badges -->
-              <div class="flex items-center gap-1.5 shrink-0">
-                ${person.isAchmash ? `<span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-sky-500/20 text-sky-300 border border-sky-500/30">🛡️ אחמ״ש</span>` : ''}
-                ${person.isMaar ? `<span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">🚑 מע״ר</span>` : ''}
+              <div class="flex items-center gap-1.5 shrink-0 flex-wrap justify-end">
+                ${person.isAchmash ? `<span class="px-2 py-1 rounded-lg text-[11px] font-bold bg-sky-500/20 text-sky-400 border border-sky-500/30">🛡️ אחמ״ש</span>` : ''}
+                ${person.isMaar ? `<span class="px-2 py-1 rounded-lg text-[11px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">🚑 מע״ר</span>` : ''}
+                ${person.hasAed ? `<span class="px-2 py-1 rounded-lg text-[11px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">⚡ AED</span>` : ''}
               </div>
             </div>
 
-            <!-- Department & Work Nature interactive pills -->
             <div class="mt-3 pt-3 border-t border-slate-800/80 flex flex-wrap items-center gap-2 text-xs">
               <button
                 type="button"
@@ -750,12 +1213,11 @@
               </button>
             </div>
 
-            <!-- Action Buttons -->
-            <div class="mt-3 flex items-center gap-2">
+            <div class="mt-3 flex items-center gap-1.5">
               ${hasValidPhone ? `
                 <a
                   href="tel:${person.phone.replace(/\D/g, '')}"
-                  class="flex-1 py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-[0.99] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md shadow-blue-950/50 transition"
+                  class="flex-1 py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-[0.99] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-md shadow-blue-950/40 transition"
                 >
                   <span>📞</span>
                   <span>חיוג (${person.phone})</span>
@@ -764,21 +1226,29 @@
                   href="${waUrl}"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="py-2.5 px-3 rounded-xl bg-emerald-600/25 hover:bg-emerald-600/40 text-emerald-300 border border-emerald-500/40 font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition"
+                  class="no-print py-2.5 px-2.5 rounded-xl bg-emerald-600/25 hover:bg-emerald-600/40 text-emerald-400 border border-emerald-500/40 font-bold text-xs flex items-center justify-center gap-1 transition"
                 >
                   <span>💬</span>
-                  <span>WhatsApp</span>
+                  <span class="hidden sm:inline">WhatsApp</span>
                 </a>
                 <button
                   type="button"
+                  data-vcard-id="${person.id}"
+                  class="vcard-btn no-print py-2.5 px-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition"
+                  title="שמור באנשי קשר (vCard)"
+                >
+                  📇
+                </button>
+                <button
+                  type="button"
                   data-copy="${person.phone}"
-                  class="copy-btn py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-semibold transition"
+                  class="copy-btn no-print py-2.5 px-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition"
                   title="העתק מספר"
                 >
                   📋
                 </button>
               ` : `
-                <div class="w-full py-2 px-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex items-center justify-between">
+                <div class="w-full py-2 px-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs flex items-center justify-between">
                   <span>מספר טלפון טרם הושלם בגיליון (${person.phone || 'ריק'})</span>
                   <a href="https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit" target="_blank" rel="noopener noreferrer" class="underline font-bold">השלם בגיליון</a>
                 </div>
@@ -789,57 +1259,268 @@
       }).join('');
 
       grid.querySelectorAll('.copy-btn').forEach(btn => {
-        btn.addEventListener('click', () => copyPhone(btn.getAttribute('data-copy')));
+        btn.addEventListener('click', () => copyTextToClipboard(btn.getAttribute('data-copy'), `המספר ${btn.getAttribute('data-copy')} הועתק ללוח`));
+      });
+
+      grid.querySelectorAll('.vcard-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = Number(btn.getAttribute('data-vcard-id'));
+          const person = filtered.find(p => p.id === targetId);
+          if (person) downloadVCard(person);
+        });
+      });
+
+      grid.querySelectorAll('.copy-dept-link-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const d = btn.getAttribute('data-copy-dept-link');
+          copyTextToClipboard(buildDeptDeepLink(d), `קישור ישיר אל ${d} הועתק ללוח!`);
+        });
       });
 
       grid.querySelectorAll('.quick-dept-pill').forEach(btn => {
+        btn.addEventListener('click', () => { state.deptFilter = btn.getAttribute('data-quick-dept'); renderAll(); });
+      });
+
+      grid.querySelectorAll('.quick-work-pill').forEach(btn => {
+        btn.addEventListener('click', () => { state.workFilter = btn.getAttribute('data-quick-work'); renderAll(); });
+      });
+    }
+
+    function renderCommanderDashboard(staffList) {
+      const matrixEl = document.getElementById('commanderDeptMatrix');
+      const healthEl = document.getElementById('dataHealthList');
+      const progressEl = document.getElementById('certProgressBars');
+
+      const total = staffList.length || 1;
+      const metrics = [
+        { label: 'מגישי עזרה ראשונה (מע״ר)', count: staffList.filter(p => p.isMaar).length, color: 'bg-emerald-500' },
+        { label: 'אחראי משמרת (אחמ״ש)', count: staffList.filter(p => p.isAchmash).length, color: 'bg-sky-500' },
+        { label: 'מוסמכי דפיברילטור (AED)', count: staffList.filter(p => p.hasAed).length, color: 'bg-amber-500' },
+        { label: 'בעלי הסמכה כפולה', count: staffList.filter(p => p.isAchmash && p.isMaar).length, color: 'bg-purple-500' }
+      ];
+
+      progressEl.innerHTML = metrics.map(m => {
+        const pct = Math.round((m.count / total) * 100);
+        return `
+          <div class="space-y-1">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-semibold text-slate-200">${m.label}</span>
+              <span class="font-bold text-slate-400">${m.count} מתוך ${staffList.length} (${pct}%)</span>
+            </div>
+            <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+              <div class="${m.color} h-full rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const groups = new Map();
+      staffList.forEach(p => {
+        const key = p.effectiveDept || 'ללא שיוך מחלקתי';
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key).push(p);
+      });
+
+      const entries = Array.from(groups.entries()).sort(([a], [b]) => {
+        if (a === 'ללא שיוך מחלקתי') return 1;
+        if (b === 'ללא שיוך מחלקתי') return -1;
+        return a.localeCompare(b, 'he', { numeric: true });
+      });
+
+      matrixEl.innerHTML = entries.map(([deptName, members]) => {
+        const achmashCount = members.filter(m => m.isAchmash).length;
+        const maarCount = members.filter(m => m.isMaar).length;
+        const aedCount = members.filter(m => m.hasAed).length;
+        const isUnassigned = deptName === 'ללא שיוך מחלקתי';
+
+        let badgeHtml = '<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">✓ כיסוי מלא</span>';
+        if (isUnassigned) {
+          badgeHtml = '<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-slate-700 text-slate-300">ממתין לשיוך</span>';
+        } else if (achmashCount === 0 && maarCount > 0) {
+          badgeHtml = '<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/40">⚠️ חסר אחמ״ש</span>';
+        } else if (maarCount === 0) {
+          badgeHtml = '<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-red-500/20 text-red-400 border border-red-500/40">🚨 חסר מע״ר</span>';
+        }
+
+        const filterKey = isUnassigned ? '__unassigned__' : deptName;
+
+        return `
+          <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-2.5">
+            <div class="flex items-center justify-between gap-2 flex-wrap">
+              <div class="flex items-center gap-2">
+                <span class="font-extrabold text-sm text-white">🏢 ${deptName}</span>
+                ${badgeHtml}
+              </div>
+              <button type="button" data-jump-dept="${filterKey}" class="jump-dept-btn text-xs text-blue-400 hover:text-blue-300 font-bold">
+                הצג כוננים ←
+              </button>
+            </div>
+            <div class="grid grid-cols-4 gap-2 text-center text-xs">
+              <div class="p-2 rounded-xl bg-slate-800/70">
+                <div class="font-extrabold text-white text-sm">${members.length}</div>
+                <div class="text-[10px] text-slate-400">סה״כ</div>
+              </div>
+              <div class="p-2 rounded-xl bg-slate-800/70">
+                <div class="font-extrabold ${achmashCount > 0 ? 'text-sky-400' : 'text-amber-400'} text-sm">${achmashCount}</div>
+                <div class="text-[10px] text-slate-400">אחמ״ש</div>
+              </div>
+              <div class="p-2 rounded-xl bg-slate-800/70">
+                <div class="font-extrabold ${maarCount > 0 ? 'text-emerald-400' : 'text-red-400'} text-sm">${maarCount}</div>
+                <div class="text-[10px] text-slate-400">מע״ר</div>
+              </div>
+              <div class="p-2 rounded-xl bg-slate-800/70">
+                <div class="font-extrabold text-amber-400 text-sm">${aedCount}</div>
+                <div class="text-[10px] text-slate-400">דפיברילטור</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      matrixEl.querySelectorAll('.jump-dept-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-          state.deptFilter = btn.getAttribute('data-quick-dept');
+          state.deptFilter = btn.getAttribute('data-jump-dept');
+          switchTab('directory');
           renderAll();
         });
       });
 
-      grid.querySelectorAll('.quick-work-pill').forEach(btn => {
-        btn.addEventListener('click', () => {
-          state.workFilter = btn.getAttribute('data-quick-work');
-          renderAll();
-        });
-      });
+      const missingPhones = state.rawStaff.filter(p => !p.phone || p.phone.includes('...'));
+      const missingDepts = state.rawStaff.filter(p => !p.dept);
+      const missingWork = state.rawStaff.filter(p => !p.workType);
+
+      const items = [
+        {
+          ok: missingPhones.length === 0,
+          text: missingPhones.length === 0
+            ? 'לכל הכוננים מוזן מספר טלפון תקין.'
+            : `חסר מספר טלפון מלא ל-${missingPhones.length} כוננים: ${missingPhones.map(p => p.name).join(', ')}.`
+        },
+        {
+          ok: missingDepts.length === 0,
+          text: missingDepts.length === 0
+            ? 'כל הכוננים משויכים למספר מחלקה.'
+            : `${missingDepts.length} כוננים עדיין ללא מספר מחלקה בעמודה H בגיליון.`
+        },
+        {
+          ok: missingWork.length === 0,
+          text: missingWork.length === 0
+            ? 'לכל הכוננים הוגדר אופי עבודה.'
+            : `${missingWork.length} כוננים עדיין ללא סיווג אופי עבודה בעמודה I בגיליון.`
+        }
+      ];
+
+      healthEl.innerHTML = items.map(item => `
+        <div class="p-2.5 rounded-xl bg-slate-900/80 border ${item.ok ? 'border-emerald-500/30 text-emerald-400' : 'border-amber-500/30 text-amber-300'} flex items-center gap-2">
+          <span>${item.ok ? '✅' : '⚠️'}</span>
+          <span>${item.text}</span>
+        </div>
+      `).join('');
+    }
+
+    function renderReportTab(staffList) {
+      const deptSelect = document.getElementById('reportDeptSelect');
+      const recipSelect = document.getElementById('reportRecipientSelect');
+
+      const depts = Array.from(new Set(staffList.map(p => p.effectiveDept).filter(Boolean)))
+        .sort((a, b) => a.localeCompare(b, 'he', { numeric: true }));
+      const deptChoices = depts.length > 0 ? [...depts, 'אחר / שטח כללי'] : ['מחלקה 55', 'אחר / שטח כללי'];
+
+      if (!deptChoices.includes(state.reportDept)) state.reportDept = deptChoices[0];
+      deptSelect.innerHTML = deptChoices.map(d => `<option value="${d}" ${d === state.reportDept ? 'selected' : ''}>${d}</option>`).join('');
+
+      const validRecipients = staffList.filter(p => p.phone && !p.phone.includes('...'));
+      if (!state.reportRecipientPhone && validRecipients.length > 0) state.reportRecipientPhone = validRecipients[0].phone;
+
+      recipSelect.innerHTML = validRecipients.map(p => {
+        const label = `${p.name} (${p.effectiveDept || 'כללי'} • ${p.isAchmash ? 'אחמ״ש' : 'מע״ר'})`;
+        return `<option value="${p.phone}" ${p.phone === state.reportRecipientPhone ? 'selected' : ''}>${label}</option>`;
+      }).join('');
+
+      updateReportPreview();
+    }
+
+    function updateReportPreview() {
+      const details = document.getElementById('reportDetailsInput').value.trim();
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
+      const dateStr = now.toLocaleDateString('he-IL');
+
+      const msg = [
+        `🚨 דיווח מרכז בטיחות (${dateStr} ${timeStr})`,
+        `• סוג אירוע: ${state.reportType}`,
+        `• מחלקה / מיקום: ${state.reportDept}`,
+        details ? `• פירוט: ${details}` : null
+      ].filter(Boolean).join('\n');
+
+      document.getElementById('reportPreviewText').textContent = msg;
+      const waBtn = document.getElementById('sendReportWaBtn');
+      waBtn.href = formatWhatsAppUrl(state.reportRecipientPhone, msg) || '#';
     }
 
     function renderEmergencyModal(staffList) {
       const listEl = document.getElementById('emergencyList');
-      const relevant = staffList.filter(p => state.emergencyType === 'maar' ? p.isMaar : p.isAchmash);
+      const emergDeptSelect = document.getElementById('emergDeptSelect');
+
+      const depts = Array.from(new Set(staffList.map(p => p.effectiveDept).filter(Boolean)))
+        .sort((a, b) => a.localeCompare(b, 'he', { numeric: true }));
+
+      const currentEmergDept = (state.emergencyDept !== 'all' && depts.includes(state.emergencyDept))
+        ? state.emergencyDept
+        : (state.deptFilter !== 'all' && state.deptFilter !== '__unassigned__' && depts.includes(state.deptFilter) ? state.deptFilter : 'all');
+
+      emergDeptSelect.innerHTML = `<option value="all" ${currentEmergDept === 'all' ? 'selected' : ''}>כל המחלקות</option>` +
+        depts.map(d => `<option value="${d}" ${currentEmergDept === d ? 'selected' : ''}>${d}</option>`).join('');
+
+      const relevant = staffList
+        .filter(p => {
+          if (state.emergencyType === 'maar') return p.isMaar;
+          if (state.emergencyType === 'aed') return p.hasAed;
+          return p.isAchmash;
+        })
+        .sort((a, b) => {
+          if (currentEmergDept !== 'all') {
+            const aMatch = a.effectiveDept === currentEmergDept;
+            const bMatch = b.effectiveDept === currentEmergDept;
+            if (aMatch !== bMatch) return aMatch ? -1 : 1;
+          }
+          return compareDepartments(a.effectiveDept, b.effectiveDept);
+        });
 
       document.querySelectorAll('.emerg-tab-btn').forEach(btn => {
         const t = btn.getAttribute('data-emerg-type');
-        if (t === state.emergencyType) {
-          btn.className = 'emerg-tab-btn py-2 px-3 rounded-xl font-bold text-xs border bg-red-600/25 border-red-500 text-red-200';
-        } else {
-          btn.className = 'emerg-tab-btn py-2 px-3 rounded-xl font-bold text-xs border bg-slate-800 border-slate-700 text-slate-300';
-        }
+        btn.className = t === state.emergencyType
+          ? 'emerg-tab-btn py-2 px-2 rounded-xl font-bold text-xs border bg-red-600/25 border-red-500 text-red-300'
+          : 'emerg-tab-btn py-2 px-2 rounded-xl font-bold text-xs border bg-slate-800 border-slate-700 text-slate-300';
       });
+
+      const roleWord = state.emergencyType === 'maar' ? 'מע״ר' : (state.emergencyType === 'aed' ? 'מפעיל דפיברילטור (AED)' : 'אחמ״ש');
 
       listEl.innerHTML = relevant.map(p => {
         const validPhone = p.phone && !p.phone.includes('...');
         const clean = (p.phone || '').replace(/\D/g, '');
-        const intl = clean.startsWith('0') ? '972' + clean.slice(1) : clean;
-        const emergMsg = encodeURIComponent(`🚨 קריאת חירום ממרכז הבטיחות: נדרש ${state.emergencyType === 'maar' ? 'מע״ר' : 'אחמ״ש'} בדחיפות!`);
+        const isPriorityMatch = currentEmergDept !== 'all' && p.effectiveDept === currentEmergDept;
+        const emergMsg = `🚨 קריאת חירום ממרכז הבטיחות${p.effectiveDept ? ' (' + p.effectiveDept + ')' : ''}: נדרש ${roleWord} בדחיפות!`;
+        const waUrl = validPhone ? formatWhatsAppUrl(p.phone, emergMsg) : '#';
 
         return `
-          <div class="p-3 rounded-2xl bg-slate-800/90 border border-slate-700 flex items-center justify-between gap-2">
+          <div class="p-3 rounded-2xl ${isPriorityMatch ? 'bg-red-950/35 border-red-500/60' : 'bg-slate-800/90 border-slate-700'} border flex items-center justify-between gap-2">
             <div>
-              <div class="font-bold text-sm text-white">${p.name}</div>
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="font-bold text-sm text-white">${p.name}</span>
+                ${isPriorityMatch ? '<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-red-600 text-white">במחלקה שלך</span>' : ''}
+                ${p.hasAed ? '<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-400">⚡ AED</span>' : ''}
+              </div>
               <div class="text-xs text-slate-400">
                 ${p.effectiveDept ? p.effectiveDept + ' • ' : ''}${p.effectiveWork || p.roleTitle}
               </div>
             </div>
             ${validPhone ? `
-              <div class="flex items-center gap-1.5">
+              <div class="flex items-center gap-1.5 shrink-0">
                 <a href="tel:${clean}" class="px-3 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs">
-                  📞 חיוג חירום
+                  📞 חיוג
                 </a>
-                <a href="https://wa.me/${intl}?text=${emergMsg}" target="_blank" rel="noopener noreferrer" class="px-2.5 py-2 rounded-xl bg-emerald-600/30 border border-emerald-500/40 text-emerald-200 font-bold text-xs">
+                <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="px-2.5 py-2 rounded-xl bg-emerald-600/30 border border-emerald-500/40 text-emerald-300 font-bold text-xs">
                   💬 הקפצה
                 </a>
               </div>
@@ -866,10 +1547,33 @@
       renderDynamicChips(effectiveStaff);
       const filtered = filterStaff(effectiveStaff);
       renderCards(filtered, effectiveStaff.length);
+      renderCommanderDashboard(effectiveStaff);
+      renderReportTab(effectiveStaff);
       renderEmergencyModal(effectiveStaff);
     }
 
     // Event bindings
+    document.getElementById('themeToggleBtn').addEventListener('click', () => {
+      state.lightMode = !state.lightMode;
+      try { localStorage.setItem('safety_center_theme', state.lightMode ? 'light' : 'dark'); } catch (e) {}
+      applyTheme();
+    });
+
+    document.getElementById('printSheetBtn').addEventListener('click', () => {
+      window.print();
+    });
+
+    document.getElementById('toggleProtocolBtn').addEventListener('click', () => {
+      const steps = document.getElementById('protocolSteps');
+      const arrow = document.getElementById('protocolArrow');
+      const hidden = steps.classList.toggle('hidden');
+      arrow.textContent = hidden ? '▾' : '▴';
+    });
+
+    document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => switchTab(btn.getAttribute('data-nav-tab')));
+    });
+
     document.getElementById('searchInput').addEventListener('input', (e) => {
       state.searchQuery = e.target.value.trim();
       document.getElementById('clearSearchBtn').classList.toggle('hidden', !state.searchQuery);
@@ -890,6 +1594,34 @@
       state.demoMode = !state.demoMode;
       state.deptFilter = 'all';
       state.workFilter = 'all';
+      renderAll();
+    });
+
+    document.getElementById('shareDeptLinkBtn').addEventListener('click', () => {
+      if (state.deptFilter !== 'all' && state.deptFilter !== '__unassigned__') {
+        copyTextToClipboard(buildDeptDeepLink(state.deptFilter), `קישור ישיר אל ${state.deptFilter} הועתק ללוח!`);
+      }
+    });
+
+    document.getElementById('pinCurrentDeptBtn').addEventListener('click', () => {
+      if (state.deptFilter !== 'all' && state.deptFilter !== '__unassigned__') {
+        state.pinnedDept = state.deptFilter;
+        state.emergencyDept = state.deptFilter;
+        try { localStorage.setItem('safety_center_pinned_dept', state.pinnedDept); } catch (e) {}
+        showToast(`${state.pinnedDept} נשמרה כמחלקה הקבועה שלך`);
+        renderAll();
+      }
+    });
+
+    document.getElementById('applyPinnedDeptBtn').addEventListener('click', () => {
+      if (state.pinnedDept) { state.deptFilter = state.pinnedDept; renderAll(); }
+    });
+
+    document.getElementById('clearPinnedDeptBtn').addEventListener('click', () => {
+      state.pinnedDept = '';
+      state.emergencyDept = 'all';
+      try { localStorage.removeItem('safety_center_pinned_dept'); } catch (e) {}
+      showToast('המחלקה הקבועה בוטלה');
       renderAll();
     });
 
@@ -915,7 +1647,53 @@
       });
     });
 
-    // Initial render + live fetch
+    document.getElementById('emergDeptSelect').addEventListener('change', (e) => {
+      state.emergencyDept = e.target.value;
+      renderEmergencyModal(getEffectiveStaff());
+    });
+
+    document.querySelectorAll('.inc-type-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.reportType = btn.getAttribute('data-inc-type');
+        document.querySelectorAll('.inc-type-btn').forEach(b => {
+          const active = b === btn;
+          b.className = active
+            ? 'inc-type-btn py-2 px-3 rounded-xl text-xs font-bold border bg-red-600/20 border-red-500 text-red-300 transition'
+            : 'inc-type-btn py-2 px-3 rounded-xl text-xs font-bold border bg-slate-800/80 border-slate-700 text-slate-300 transition';
+        });
+        updateReportPreview();
+      });
+    });
+
+    document.getElementById('reportDeptSelect').addEventListener('change', (e) => {
+      state.reportDept = e.target.value;
+      updateReportPreview();
+    });
+
+    document.getElementById('reportRecipientSelect').addEventListener('change', (e) => {
+      state.reportRecipientPhone = e.target.value;
+      updateReportPreview();
+    });
+
+    document.getElementById('reportDetailsInput').addEventListener('input', updateReportPreview);
+
+    document.getElementById('copyReportBtn').addEventListener('click', () => {
+      copyTextToClipboard(document.getElementById('reportPreviewText').textContent, 'הודעת הדיווח הועתקה ללוח');
+    });
+
+    document.getElementById('copyCommanderSummaryBtn').addEventListener('click', () => {
+      const staff = getEffectiveStaff();
+      const summary = [
+        `📊 תמונת מצב מרכז בטיחות:`,
+        `• סה״כ כוננים: ${staff.length} (אחמ״ש: ${staff.filter(p => p.isAchmash).length} | מע״ר: ${staff.filter(p => p.isMaar).length} | דפיברילטור: ${staff.filter(p => p.hasAed).length})`,
+        `• מחלקה 55: ${staff.filter(p => p.effectiveDept === 'מחלקה 55').length} מע״רים (כולם מוסמכי דפיברילטור, חסר שיוך אחמ״ש)`,
+        `• קישור חי: ${LIVE_SITE_URL}`
+      ].join('\n');
+      copyTextToClipboard(summary, 'סיכום המפקד הועתק ללוח');
+    });
+
+    // Initial boot
+    applyTheme();
     renderAll();
     syncFromGoogleSheet();
   </script>
